@@ -1,0 +1,101 @@
+
+check if the query returned anytin or not
+
+$user = DB::getinstance()->get('users', array('username', '=', 'billy'));
+
+if (!$user->count()){
+	echo 'no user';
+}else{
+	echo 'OK';
+}
+
+
+
+selecting all from a database
+
+$user = DB::getinstance()->query("SELECT * FROM users");
+
+if (!$user->count()){
+	echo 'no user';
+}else{
+	foreach($user->results() as $user){
+		echo $user->username, '<br>';
+	}
+}
+
+
+return a results of only the first result
+
+
+$user = DB::getinstance()->get('users', array('username', '=', 'alex'));
+
+if (!$user->count()){
+	echo 'no user';
+}else{
+	echo $user->first()->username;
+}
+
+
+inserting a user or item
+
+$userInsert = DB::getinstance()->insert('users', array(
+	'username' => 'Dale',
+	'password' => 'password',
+	'salt' 	=> 	'salt'
+));
+
+if ($userInsert){
+	//success
+}else{
+	//failure
+}
+
+
+to update a user or item
+
+$userUpdate = DB::getinstance()->update('users', 3, array(
+	'password' => 'newpassword',
+	'name' => 'dale Garrett'
+));
+
+if ($userUpdate){
+	//success
+}else{
+	//failure
+}
+
+
+redirect a user
+Redirect::to('index.php');
+
+
+if user is logged in
+
+
+
+$user = new User();
+
+if ($user->isLoggedin()){
+	?>
+
+	<p> Hello <a href=""><?php echo escape($user->data()->username); ?></a></p>
+
+	<ul>
+		<li> <a href="logout.php">Logout</a></li>
+
+	</ul>
+	<?php
+}else{
+	echo '<p>You need to <a href="login.php">Login</a> or<a href="register.php">Register</a></p>';
+}
+
+read more about flashing
+
+Session::flash('success', 'You Registered Successfully');
+			header('Location: index.php');
+
+destination
+
+if(Session::exists('home')){
+	echo Session::flash('success');
+}
